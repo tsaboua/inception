@@ -1,0 +1,41 @@
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    depends_on:
+      - wordpress
+    volumes:
+      - /home/tsaboua/data/wordpress:/var/www/html
+    ports:
+      - 443:443
+    networks:
+      - inception
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    env_file:
+      - .env
+    volumes:
+      - /home/tsaboua/data/mariadb:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - /home/tsaboua/data/wordpress:/var/www/html
+    networks:
+      - inception
+    restart: always
+
+networks:
+  inception:
+    driver: bridge
