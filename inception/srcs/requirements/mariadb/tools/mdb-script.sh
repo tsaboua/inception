@@ -1,5 +1,4 @@
 #!/bin/bash
-env
 
 if [ -d "/var/lib/mysql/wordpress" ]; then
     echo "Base de données wordpress déjà initialisée."
